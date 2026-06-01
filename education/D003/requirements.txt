@@ -1,0 +1,7 @@
+pyserial
+gpiozero
+lgpio
+adafruit-blinka
+adafruit-circuitpython-ssd1306
+pillow
+SMBus2

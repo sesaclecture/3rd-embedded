@@ -1,0 +1,26 @@
+version: "3"
+services:
+  pub:
+    build: .
+    container_name: pub
+    command: ["python3", "pub.py"]
+    networks: [zmqnet]
+
+  pubsub:
+    build: .
+    container_name: pubsub
+    command: ["python3", "pubsub.py"]
+    depends_on: [pub]
+    networks: [zmqnet]
+
+  sub:
+    build: .
+    container_name: sub
+    command: ["python3", "sub.py", "C"]   # 토픽 C 구독 (F로 바꿔도 됨)
+    depends_on: [pubsub]
+    networks: [zmqnet]
+
+networks:
+  zmqnet:
+    driver: bridge
+

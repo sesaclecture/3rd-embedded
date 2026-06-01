@@ -1,0 +1,6 @@
+enable_uart=1
+dtoverlay=uart2-pi5
+
+dtoverlay -h uart2-pi5
+pinctrl get 4
+pinctrl get 5

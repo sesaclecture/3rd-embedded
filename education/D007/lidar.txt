@@ -1,0 +1,9 @@
+~/.stop_ros.sh
+ros2 launch app lidar_node.launch.py debug:=true
+
+ros2 service call /lidar_app/enter std_srvs/srv/Trigger {}
+
+ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 0}"
+ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 1}"
+ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 2}"
+ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 3}"

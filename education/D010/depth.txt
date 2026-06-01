@@ -1,0 +1,5 @@
+
+/shared 폴더에 depth_rgb_filter 폴더 만들수있도록 colcon create할 것.
+
+ros2_ws/src로 이동한 다음 ln -s /shared/depth_rgb_filter depth_rgb_filter 형태로 만들어줘서,
+도커 내부에서 테스트 가능하고 depth_rg_filter 폴더는 살릴 수 있도록!

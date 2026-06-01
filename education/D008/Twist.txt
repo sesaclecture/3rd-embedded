@@ -1,0 +1,70 @@
+ros2 launch controller controller.launch.py
+
+# 전진 (x=+0.3)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.3, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 후진 (x=-0.3)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: -0.3, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+
+# 좌로 이동 (y=+0.3)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.0, y: 0.3, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 우로 이동 (y=-0.3)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.0, y: -0.3, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+
+# 반시계(CCW) 회전 (yaw z=+0.6 rad/s)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.6}}"
+
+# 시계(CW) 회전 (yaw z=-0.6 rad/s)
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.6}}"
+
+
+# 정지
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+
+
+# 전진 좌 이동
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.2, y: 0.2, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 전진 우 이동
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.2, y: -0.2, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 후진 좌 이동
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: -0.2, y: 0.2, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 후진 우 이동
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: -0.2, y: -0.2, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+# 전진 반시계 회전
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.4}}"
+
+# 전진 시계 회전
+timeout 2s ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.4}}"
+
+----------------
+
+
+ros2 topic list | grep cmd_vel
+ros2 topic info /cmd_vel
+
+ros2 interface show geometry_msgs/msg/Twist
+
+ros2 topic echo /cmd_vel
+
+rqt_graph

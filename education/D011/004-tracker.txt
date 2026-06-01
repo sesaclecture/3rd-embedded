@@ -1,0 +1,14 @@
+<exec_depend>rclpy</exec_depend>
+<exec_depend>sensor_msgs</exec_depend>
+<exec_depend>geometry_msgs</exec_depend>
+<exec_depend>cv_bridge</exec_depend>
+<exec_depend>message_filters</exec_depend>
+
+-----------
+
+entry_points={
+    'console_scripts': [
+        'lab_calibration_node = obj_tracker.lab_calibration_node:main',
+        'obj_tracker_node = obj_tracker.obj_tracker_node:main',
+    ],
+},
