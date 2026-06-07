@@ -1,9 +1,37 @@
+
+ibus list-engine | grep hangul
+
+ps -elf | grep ibus
+ibus-daemon -drx
+ibus restart
+
+gedit ~/.xprofile
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
+x11 설정 -> host, target 둘다
+
+sudo reboot
+
+-------------
+
+sudo apt install meld -y
+
+git config --global diff.tool meld
+git config --global difftool.prompt false
+
+git difftool HEAD~1 HEAD
+
+----------
+
 sudo apt-get install build-essential gcc-aarch64-linux-gnu \
     bc git wget libssl-dev make libc6-dev libncurses5-dev \
     bison flex libgnutls28-dev
 
 git clone https://github.com/u-boot/u-boot.git
 cd u-boot
+git checkout v2025.07
 make distclean
 make rpi_arm64_defconfig
 make -j$(nproc) CROSS_COMPILE=aarch64-linux-gnu-
@@ -33,3 +61,14 @@ printenv bootargs -> cat /proc/cmdline
 printenv bootdelay
 setenv bootdelay 5
 saveenv
+
+------------
+
+quiet
+splash
+plymouth.ignore-serial-consoles
+
+loglevel=8
+ignore_loglevel
+
+sudo dmesg까지..
