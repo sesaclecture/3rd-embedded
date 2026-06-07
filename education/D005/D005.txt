@@ -1,0 +1,58 @@
+
+sudo usermod -aG docker $USER
+sudo reboot
+
+docker pull ubuntu:24.04
+
+docker images
+
+docker run ubuntu:24.04
+
+docker ps
+
+docker run -it ubuntu:24.04 /bin/bash
+exit
+
+docker ps -a
+
+docker rm <id>
+docker rmi <id>
+
+
+pull, images, run, ps, rm, rmi
+
+------------------------
+
+docker pull ubuntu:22.04
+docker run -it --rm --name test_ubuntu ubuntu:24.04 /bin/bash
+cat /etc/os-release
+
+hostname
+uname -a
+
+docker exec -it test_ubuntu /bin/bash
+
+apt install figlet
+figlet docker
+
+apt install cowsay
+/usr/games/cowsay docker
+
+파일 생성 후 exit 해서 파일 사라짐 체크
+
+exec, commit or -v 옵션
+
+---------------------------
+
+dockerfile 활용해서 같은 작업들 해보자!
+
+dockerfile안에서 /app/info.txt 파일 만들고 내용은 this is Docker paractice 로 채워넣은 후 출력하기
+
+
+--------------------------
+
+nginx 띄우는거 단일 도커로..
+compose로
+
+nginx 및 apache 둘 동시에 띄우는거 단일 도커로..
+compose로
