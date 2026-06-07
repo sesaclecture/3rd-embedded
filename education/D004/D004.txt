@@ -1,0 +1,32 @@
+기본 ssh 접속 vs ssh 접속 하면서 명령어 던지기
+ - 단순 터미널 접속이 아니라 원격 명령 실행 채널이라는 점!
+
+ssh port 변경
+ - daemon에 대한 첫 언급
+ - sudo systemctl restart sshd
+ - sudo netstat -tlnp | grep ssh
+
+ssh-key에서..
+ chmod 600이 아닐경우? 접속 안됨..
+
+alias 통해서 손쉽게 ssh 접속 하기
+
+tar명령어
+
+
+dd if=/dev/urandom of=random_1g.bin bs=1M count=1024 status=progress
+md5sum
+
+
+
+
+scp로는 파일 통째로 복사 시도 해보기
+
+
+원격업로드 하는 bash 스크립트 만들어서 환경변수로 경로 잡아주고,
+아무곳에서나 원하는 파일이나 폴더 업로드 한큐에 할 수 있도록 작성해보자!
+
+journalctl -u sshd
+
+
+VSCode에서 remote 환경 구축 까지..
