@@ -1,26 +1,45 @@
 version: "3"
 services:
-  pub:
-    build: .
-    container_name: pub
-    command: ["python3", "pub.py"]
+  sub_2:
+    build:
+      context: .
+      args:
+        UBUNTU_VERSION: 24.04
+    container_name: sub_2
+    command: ["python3", "-u", "sub.py", "F"]   # 토픽 C 구독 (F로 바꿔도 됨)
+    depends_on: [pubsub]
+    networks: [zmqnet]
+
+  sub_1:
+    build:
+      context: .
+      args:
+        UBUNTU_VERSION: 24.04
+    container_name: sub_1
+    command: ["python3", "-u", "sub.py", "C"]   # 토픽 C 구독 (F로 바꿔도 됨)
+    depends_on: [pubsub]
     networks: [zmqnet]
 
   pubsub:
-    build: .
+    build:
+      context: .
+      args:
+        UBUNTU_VERSION: 22.04
     container_name: pubsub
-    command: ["python3", "pubsub.py"]
+    command: ["python3", "-u", "pubsub.py"]
     depends_on: [pub]
     networks: [zmqnet]
 
-  sub:
-    build: .
-    container_name: sub
-    command: ["python3", "sub.py", "C"]   # 토픽 C 구독 (F로 바꿔도 됨)
-    depends_on: [pubsub]
+  pub:
+    build:
+      context: .
+      args:
+        UBUNTU_VERSION: 20.04
+    container_name: pub
+    command: ["python3", "-u", "pub.py"]
     networks: [zmqnet]
+
 
 networks:
   zmqnet:
     driver: bridge
-

@@ -1,12 +1,16 @@
-FROM ubuntu:24.04
+ARG UBUNTU_VERSION=24.04
 
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    pip3 install pyzmq && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+FROM ubuntu:${UBUNTU_VERSION}
+
+RUN apt update && \
+    apt install -y python3 python3-pip python3-venv
+
+RUN python3 -m venv /venv
+
+ENV PATH="/venv/bin:$PATH"
+RUN pip install pyzmq
 
 WORKDIR /app
-COPY app/ /app/
+COPY . .
 
 CMD ["bash"]
-
