@@ -1,5 +1,35 @@
+
+X11 관련 docker_start.sh 및 exec_start.sh파일 작성 관련 설명..
+turtlesim GUI및 rqt_graph 열리는 모습 보여주는 식으로 이어가도록..
+
+------------------
+
 ~/.stop_ros.sh
 ros2 launch app lidar_node.launch.py debug:=true
+
+node    = 실행 중인 프로그램
+topic   = 계속 흘러가는 데이터
+service = 한 번 요청하고 응답 받는 명령
+
+1. 기본 정보 살펴 봅시드어~
+
+ros2 topic list
+ros2 topic echo /scan --once
+ros2 topic info /scan
+ros2 interface show sensor_msgs/msg/LaserScan
+
+ranges[] = 각도별 거리값 배열
+값이 작다 = 가까운 물체
+inf = 측정 안 됨 또는 너무 멂
+nan = 유효하지 않은 값
+
+2. 서비스 살펴보기
+
+ros2 service list
+ros2 service type /서비스이름
+ros2 interface show 서비스타입
+
+3. 서비스 실행 관련,,
 
 ros2 service call /lidar_app/enter std_srvs/srv/Trigger {}
 
@@ -7,3 +37,42 @@ ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 0}"
 ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 1}"
 ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 2}"
 ros2 service call /lidar_app/set_running interfaces/srv/SetInt64 "{data: 3}"
+
+data: 0 = 꺼짐
+data: 1 = 장애물 회피
+data: 2 = 라이다 추종
+data: 3 = 라이다 경비
+
+service call = 로봇에게 명령 요청
+topic echo   = 로봇 상태/센서값 관찰
+node         = 실제 동작하는 프로그램
+
+ 1. 로봇 앞에 손을 댄다.
+ 2. /scan 값이 바뀌는지 본다.
+ 3. service call로 obstacle avoidance를 켠다.
+ 4. 로봇이 멈추거나 회피하는지 본다.
+ 5. 코드에서 거리 기준값을 찾는다.
+ 6. 0.6m → 0.3m로 바꿔본다.
+ 7. 빌드 후 다시 실행한다.
+
+ 4. 코드 분석
+
+ ~/ros2_ws/src/peripherals/launch/include/ldlidar_LD19.launch.py
+
+ /dev/ldlidar 장치에서 값을 읽는다.
+ldlidar 노드가 scan 데이터를 만든다.
+scan이 scan_raw로 remap된다.
+
+~/ros2_ws/src/app/app/lidar_controller.py
+self.create_subscription(
+    LaserScan,
+    '/scan_raw',
+    self.lidar_callback,
+    qos
+)
+
+self.lidar_callback에서
+모드별로 구현되어 있고, threshold 기준으로 로봇 제어가 결정됨을 알 수 있음..
+
+
+센서값은 topic으로 들어오고, 명령은 service로 보내고, 로봇 제어는 코드 안에서 threshold 기준으로 결정된다.
