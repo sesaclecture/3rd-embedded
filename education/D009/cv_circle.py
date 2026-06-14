@@ -1,32 +1,44 @@
 import cv2
 
-# 전역 변수로 사용할 프레임
-frame = None
+# 클릭한 좌표들을 저장
+points = []
 
-# 마우스 이벤트 콜백 함수
+
 def draw_circle(event, x, y, flags, param):
-    global frame
-    if event == cv2.EVENT_LBUTTONDOWN:  # 왼쪽 버튼 클릭
-        cv2.circle(frame, (x, y), 20, (255, 0, 0), -1)
-        # (x,y) 중심에 반지름 20, 파란색 원을 채워서 그림
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print(f"clicked: x={x}, y={y}")
+        points.append((x, y))
 
-# 카메라 열기
+
 cap = cv2.VideoCapture(0)
 
-# 창 생성 및 마우스 콜백 등록
+if not cap.isOpened():
+    print("camera open failed")
+    exit(1)
+
 cv2.namedWindow("Camera")
 cv2.setMouseCallback("Camera", draw_circle)
 
-while cap.isOpened():
+while True:
     ret, frame = cap.read()
     if not ret:
+        print("frame read failed")
         break
+
+    # 저장된 클릭 좌표를 매 프레임마다 다시 그림
+    for x, y in points:
+        cv2.circle(frame, (x, y), 20, (255, 0, 0), -1)
 
     cv2.imshow("Camera", frame)
 
-    # 'q' 입력 시 종료
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    key = cv2.waitKey(1) & 0xFF
+
+    if key == ord("q"):
         break
+
+    # c 누르면 그린 원 초기화
+    if key == ord("c"):
+        points.clear()
 
 cap.release()
 cv2.destroyAllWindows()

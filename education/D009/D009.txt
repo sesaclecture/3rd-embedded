@@ -1,0 +1,7 @@
+
+if cv2.waitKey(0) & 0xFF == ord('s'):
+    cv2.imwrite('saved_image.jpg', img)
+else:
+    print("Image not saved.")
+
+--------------

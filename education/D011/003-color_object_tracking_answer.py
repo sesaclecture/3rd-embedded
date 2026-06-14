@@ -68,16 +68,26 @@ while True:
     # method: 윤곽선 근사화(압축) 방법
     #   - cv2.CHAIN_APPROX_SIMPLE: 꼭짓점만 반환(메모리 절약)
     #   - cv2.CHAIN_APPROX_NONE: 모든 경계점 반환
-    contours, _ = # TODO
+    contours, _ = cv2.findContours(
+        mask,
+        cv2.RETR_EXTERNAL,
+        cv2.CHAIN_APPROX_SIMPLE
+    )
 
     if contours:
         # 각 컨투어의 면적 계산 후, 가장 큰 것 선택
-        biggest = # TODO
+        biggest = max(contours, key=cv2.contourArea)
 
-        x, y, w, h = #TODO
+        x, y, w, h = cv2.boundingRect(biggest)  # (x, y): 좌상단, (w, h): 폭, 높이
 
         # 원본 이미지에 사각형 그리기
-        #TODO
+        cv2.rectangle(
+            res,
+            (x, y),
+            (x + w, y + h),
+            (0, 255, 0),
+            2
+        )
 
         # 사각형 좌표 표시
         cv2.putText(
